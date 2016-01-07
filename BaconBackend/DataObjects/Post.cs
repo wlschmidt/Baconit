@@ -137,6 +137,12 @@ namespace BaconBackend.DataObjects
         public string LinkFlairText { get; set; }
 
         /// <summary>
+        /// If the post is gilded or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "gilded")]
+        public bool Gilded { get; set; }        
+
+        /// <summary>
         /// true: the logged-in user upvoted the post.
         /// false: the logged-in user downvoted the post.
         /// null: the logged-in user has neither upvoted nor downvoted the post.
@@ -214,6 +220,12 @@ namespace BaconBackend.DataObjects
         }
         [JsonIgnore]
         CommentSortTypes m_commentSortType = CommentSortTypes.Best;
+
+        /// <summary>
+        /// Indicates if we have seeded this post with the defaults yet.
+        /// </summary>
+        [JsonIgnore]
+        public bool HaveCommentDefaultsBeenSet = false;
 
         //
         // UI Vars
@@ -603,6 +615,20 @@ namespace BaconBackend.DataObjects
             }
         }
 
+        /// <summary>
+        /// Used by the subreddit list to show or hide gilded tag
+        /// </summary>
+        [JsonIgnore]
+        public Visibility GildedVisibility
+        {
+            get
+            {
+                return Gilded ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        
+
         #region FlipView Vars
 
         /// <summary>
@@ -722,6 +748,7 @@ namespace BaconBackend.DataObjects
 
         /// <summary>
         /// The visibility of the post's header as sticky to the top of the flip view.
+        /// Note!!! The default should be visible so the FlipViewStickyHeaderMargin trick works!
         /// </summary>
         [JsonIgnore]
         public Visibility FlipViewStickyHeaderVis
@@ -737,7 +764,26 @@ namespace BaconBackend.DataObjects
             }
         }
         [JsonIgnore]
-        Visibility m_flipViewStickyHeaderVis = Visibility.Collapsed;
+        Visibility m_flipViewStickyHeaderVis = Visibility.Visible;
+
+        /// <summary>
+        /// Fun trick, this is used to make the flipview sticky header render off screen so it is ready when we want
+        /// to show it. We use -3000 to make sure it is way off screen.
+        /// </summary>
+        public Thickness FlipViewStickyHeaderMargin
+        {
+            get
+            {
+                return m_flipViewStickyHeaderMargin;
+            }
+            set
+            {
+                m_flipViewStickyHeaderMargin = value;
+                NotifyPropertyChanged(nameof(FlipViewStickyHeaderMargin));
+            }
+        }
+        [JsonIgnore]
+        Thickness m_flipViewStickyHeaderMargin = new Thickness(0,-3000,0,0);
 
         /// <summary>
         /// The visibility of the button to show all comments on a post.

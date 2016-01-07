@@ -151,6 +151,24 @@ namespace BaconBackend.Collectors
             }
 
             InitListHelper(postCollectionUrl, hasEmptyRoot, true, optionalArgs);
+
+            // Listen to user changes so we will update the subreddits
+            m_baconMan.UserMan.OnUserUpdated += OnUserUpdated;
+        }
+
+
+        /// <summary>
+        /// Fired when the current user is updated.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void OnUserUpdated(object sender, OnUserUpdatedArgs args)
+        {
+            // If a user is added or removed update the subreddit to reflect the new user.
+            if (args.Action != UserCallbackAction.Updated)
+            {
+                Update(true);
+            }
         }
 
         /// <summary>
@@ -451,7 +469,7 @@ namespace BaconBackend.Collectors
                 post.SubTextLine2PartTwo = (showSubreddit ? post.Subreddit.ToLower() : post.Domain);
 
                 // Set the second line for flipview
-                post.FlipViewSecondary = $"r/{post.Subreddit.ToLower()}";
+                post.FlipViewSecondary = showSubreddit ? $"r/{post.Subreddit.ToLower()}" : TimeToTextHelper.TimeElapseToText(postTime) + " ago";
 
                 // Escape the title, flair, and selftext
                 post.Title = WebUtility.HtmlDecode(post.Title);

@@ -115,21 +115,32 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Grid Margin="0,0,8,0"
-                              HorizontalAlignment="Left"
-                              Background="#107c10"
-                              Visibility="{Binding StickyVisibility}">
+                        <Border Margin="0,0,8,0"
+                                HorizontalAlignment="Left"
+                                Background="#107c10"
+                                CornerRadius="2"
+                                Visibility="{Binding StickyVisibility}">
                             <TextBlock Margin="6,2,6,2"
                                        Foreground="#DDFFFFFF"
                                        Text="Sticky" />
-                        </Grid>
-                        <Grid HorizontalAlignment="Left"
-                              Background="{Binding DarkenedAccentColorBrush}"
-                              Visibility="{Binding FlairVisibility}">
+                        </Border>
+                        <Border Margin="0,0,8,0"
+                                HorizontalAlignment="Left"
+                                Background="{Binding DarkenedAccentColorBrush}"
+                                CornerRadius="2"
+                                Visibility="{Binding FlairVisibility}">
                             <TextBlock Margin="6,2,6,2"
                                        Foreground="#DDFFFFFF"
                                        Text="{Binding LinkFlairText}" />
-                        </Grid>
+                        </Border>
+                        <Border HorizontalAlignment="Left"
+                                Background="#A88745"
+                                CornerRadius="2"
+                                Visibility="{Binding GildedVisibility}">
+                            <TextBlock Margin="6,2,6,2"
+                                       Foreground="White"
+                                       Text="Gilded" />
+                        </Border>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Column="2"
@@ -171,7 +182,7 @@
                         <TextBlock x:Name="ui_subredditName"
                                    Margin="12,12,0,12"
                                    VerticalAlignment="Bottom"
-                                   Text="Baconit" />
+                                   Text="/r/baconit" />
                     </Grid>
 
                     <!--  Sort Menu  -->
@@ -217,7 +228,8 @@
                                 Background="Transparent"
                                 Orientation="Horizontal"
                                 Padding="0,12,12,12"
-                                Tapped="SortTime_Tapped">
+                                Tapped="SortTime_Tapped"
+                                Visibility="Collapsed">
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem Click="SortTimeMenuItem_Click" Text="Past Hour" />

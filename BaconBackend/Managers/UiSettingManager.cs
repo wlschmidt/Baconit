@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BaconBackend.Collectors;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -216,6 +217,62 @@ namespace BaconBackend.Managers
         private bool? m_subredditList_ShowFullTitles = null;
 
         /// <summary>
+        /// The default subreddit sort type
+        /// </summary>
+        public SortTypes SubredditList_DefaultSortType
+        {
+            get
+            {
+                if (!m_subredditList_DefaultSortType.HasValue)
+                {
+                    if (m_baconMan.SettingsMan.RoamingSettings.ContainsKey("UiSettingManager.SubredditList_DefaultSortType"))
+                    {
+                        m_subredditList_DefaultSortType = m_baconMan.SettingsMan.ReadFromRoamingSettings<SortTypes>("UiSettingManager.SubredditList_DefaultSortType");
+                    }
+                    else
+                    {
+                        m_subredditList_DefaultSortType = SortTypes.Hot;
+                    }
+                }
+                return m_subredditList_DefaultSortType.Value;
+            }
+            set
+            {
+                m_subredditList_DefaultSortType = value;
+                m_baconMan.SettingsMan.WriteToRoamingSettings<SortTypes>("UiSettingManager.SubredditList_DefaultSortType", m_subredditList_DefaultSortType.Value);
+            }
+        }
+        private SortTypes? m_subredditList_DefaultSortType = null;
+
+        /// <summary>
+        /// The default subreddit sort time type
+        /// </summary>
+        public SortTimeTypes SubredditList_DefaultSortTimeType
+        {
+            get
+            {
+                if (!m_subredditList_DefaultSortTimeType.HasValue)
+                {
+                    if (m_baconMan.SettingsMan.RoamingSettings.ContainsKey("UiSettingManager.SubredditList_DefaultSortTimeType"))
+                    {
+                        m_subredditList_DefaultSortTimeType = m_baconMan.SettingsMan.ReadFromRoamingSettings<SortTimeTypes>("UiSettingManager.SubredditList_DefaultSortTimeType");
+                    }
+                    else
+                    {
+                        m_subredditList_DefaultSortTimeType = SortTimeTypes.Week;
+                    }
+                }
+                return m_subredditList_DefaultSortTimeType.Value;
+            }
+            set
+            {
+                m_subredditList_DefaultSortTimeType = value;
+                m_baconMan.SettingsMan.WriteToRoamingSettings<SortTimeTypes>("UiSettingManager.SubredditList_DefaultSortTimeType", m_subredditList_DefaultSortTimeType.Value);
+            }
+        }
+        private SortTimeTypes? m_subredditList_DefaultSortTimeType = null;
+
+        /// <summary>
         /// The default Subreddit to show when the app opens
         /// </summary>
         public string SubredditList_DefaultSubredditDisplayName
@@ -248,6 +305,67 @@ namespace BaconBackend.Managers
             }
         }
         private string m_subredditList_DefaultSubreddit = null;
+
+        #endregion
+
+        #region Comments
+
+        /// <summary>
+        /// The default comment sort type
+        /// </summary>
+        public CommentSortTypes Comments_DefaultSortType
+        {
+            get
+            {
+                if (!m_comments_DefaultSortType.HasValue)
+                {
+                    if (m_baconMan.SettingsMan.RoamingSettings.ContainsKey("UiSettingManager.Comments_DefaultSortType"))
+                    {
+                        m_comments_DefaultSortType = m_baconMan.SettingsMan.ReadFromRoamingSettings<CommentSortTypes>("UiSettingManager.Comments_DefaultSortType");
+                    }
+                    else
+                    {
+                        m_comments_DefaultSortType = CommentSortTypes.Best;
+                    }
+                }
+                return m_comments_DefaultSortType.Value;
+            }
+            set
+            {
+                m_comments_DefaultSortType = value;
+                m_baconMan.SettingsMan.WriteToRoamingSettings<CommentSortTypes>("UiSettingManager.Comments_DefaultSortType", m_comments_DefaultSortType.Value);
+            }
+        }
+        private CommentSortTypes? m_comments_DefaultSortType = null;
+
+
+        /// <summary>
+        /// The default comment count number
+        /// </summary>
+        public int Comments_DefaultCount
+        {
+            get
+            {
+                if (!m_comments_DefaultCount.HasValue)
+                {
+                    if (m_baconMan.SettingsMan.RoamingSettings.ContainsKey("UiSettingManager.Comments_DefaultCount"))
+                    {
+                        m_comments_DefaultCount = m_baconMan.SettingsMan.ReadFromRoamingSettings<int>("UiSettingManager.Comments_DefaultCount");
+                    }
+                    else
+                    {
+                        m_comments_DefaultCount = 150;
+                    }
+                }
+                return m_comments_DefaultCount.Value;
+            }
+            set
+            {
+                m_comments_DefaultCount = value;
+                m_baconMan.SettingsMan.WriteToRoamingSettings<int>("UiSettingManager.Comments_DefaultCount", m_comments_DefaultCount.Value);
+            }
+        }
+        private int? m_comments_DefaultCount = null;
 
         #endregion
 
