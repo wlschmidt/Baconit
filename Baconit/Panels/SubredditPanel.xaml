@@ -302,14 +302,17 @@
                         </Grid.ColumnDefinitions>
                         <helperControl:CircleIconButton Grid.Column="0"
                                                         OnIconTapped="Refresh_Click"
-                                                        SymbolIcon="Refresh" />
+                                                        SymbolIcon="Refresh" 
+                                                        ToolTipService.ToolTip="Refresh"/>
                         <helperControl:CircleIconButton Grid.Column="1"
                                                         FontIconGlyph="&#xE700;"
-                                                        OnIconTapped="MenuButton_Click" />
+                                                        OnIconTapped="MenuButton_Click" 
+                                                        ToolTipService.ToolTip="Menu" />
                         <helperControl:CircleIconButton x:Name="ui_appBarSideBarOpen"
                                                         Grid.Column="2"
                                                         OnIconTapped="AppBarSideBarOpen_OnIconTapped"
-                                                        SymbolIcon="DockRight" />
+                                                        SymbolIcon="DockRight" 
+                                                        ToolTipService.ToolTip="Open/Close Sidebar"/>
                     </Grid>
                 </Grid>
             </Grid>
